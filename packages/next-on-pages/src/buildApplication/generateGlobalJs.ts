@@ -20,11 +20,11 @@ export function generateGlobalJs(): string {
 				env: new Proxy(
 					{},
 					{
-						ownKeys: () => Reflect.ownKeys(envAsyncLocalStorage.getStore()),
+						ownKeys: () => Reflect.ownKeys(envAsyncLocalStorage.getStore() || {}),
 						getOwnPropertyDescriptor: (_, ...args) =>
-							Reflect.getOwnPropertyDescriptor(envAsyncLocalStorage.getStore(), ...args),
-						get: (_, property) => Reflect.get(envAsyncLocalStorage.getStore(), property),
-						set: (_, property, value) => Reflect.set(envAsyncLocalStorage.getStore(), property, value),
+							Reflect.getOwnPropertyDescriptor(envAsyncLocalStorage.getStore() || {}, ...args),
+						get: (_, property) => Reflect.get(envAsyncLocalStorage.getStore() || {}, property),
+						set: (_, property, value) => Reflect.set(envAsyncLocalStorage.getStore() || {}, property, value),
 				}),
 			};
 			return envAsyncLocalStorage;
